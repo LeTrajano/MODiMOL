@@ -1,0 +1,6 @@
+rdkit
+pandas
+matplotlib
+requests
+numpy
+scikit-learn
