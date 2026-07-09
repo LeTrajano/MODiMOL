@@ -2,122 +2,200 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+
     <title>MODiMOL</title>
 
-    <style>
-    body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        margin: 0;
-        background: #f4f6f9;
-    }
+    <link rel="stylesheet" href="style.css">
+</head> 
 
-    .container {
-        max-width: 900px;
-        margin: 40px auto;
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
 
-    h1 {
-        margin-bottom: 10px;
-        color: #2c3e50;
-    }
-
-    h2 {
-        margin-top: 30px;
-        color: #34495e;
-    }
-
-    input {
-        padding: 12px;
-        width: 100%;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        margin-bottom: 15px;
-        font-size: 14px;
-    }
-
-    button {
-        padding: 10px 15px;
-        margin-right: 10px;
-        border: none;
-        border-radius: 6px;
-        background-color: #3498db;
-        color: white;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    button:hover {
-        background-color: #2980b9;
-    }
-
-    .actions {
-        margin-bottom: 20px;
-    }
-
-    pre {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 6px;
-        border: 1px solid #ddd;
-        overflow-x: auto;
-    }
-
-    img {
-        margin-top: 20px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        padding: 10px;
-        background: #fff;
-    }
-
-    iframe {
-        border-radius: 8px;
-        border: 1px solid #ccc;
-    }
-</style>
-
-</head>
 <body>
+<header class="topbar">
 
-<div class="container">
+    <div class="header-left">
 
-    <h1>MODiMOL</h1>
-    <p>Plataforma de reconhecimento e análise molecular</p>
+        <h1>MODiMOL</h1>
 
-    <h2>Desenho da Molécula</h2>
+        <p>
+            Plataforma de Modelagem para Inovação Molecular
+        </p>
 
-    <iframe
-    id="ketcher-frame"
-    src="standalone/"
-    width="100%"
-    height="500">
-    </iframe>
-
-    <br><br>
-    <button onclick="obterSmilesDoDesenho()">Obter SMILES do desenho</button>
-
-    <h2>Entrada de SMILES</h2>
-
-    <input id="smiles" placeholder="Ex: CCO">
-
-    <div class="actions">
-        <button onclick="normalizar()">Normalizar</button>
-        <button onclick="buscarSimilar()">Buscar similares</button>
     </div>
 
-    <img id="mol-img" width="300"/>
+</header>
 
-    <h2>Resultado</h2>
-    <pre id="output"></pre>
+<main class="layout">
 
-</div>
+
+    <!-- ESQUERDA -->
+
+
+    <section class="editor-panel">
+
+        <h2>Editor Molecular</h2>
+
+        <iframe
+
+            id="ketcher-frame"
+
+            src="standalone/"
+
+            width="100%"
+
+            height="520">
+
+        </iframe>
+
+        <div class="smiles-box">
+
+            <label>SMILES</label>
+
+            <input
+
+                id="smiles"
+
+                placeholder="Ex: CCO">
+
+        </div>
+
+        <div class="buttons">
+
+            <button onclick="obterSmilesDoDesenho()">
+
+                Obter SMILES
+
+            </button>
+
+            <button onclick="normalizar()">
+
+                Normalizar
+
+            </button>
+
+            <button onclick="buscarSimilar()">
+
+                Buscar Similares
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- DIREITA -->
+
+
+<aside class="info-panel">
+
+    <div class="result-card">
+
+        <h2>Informações Moleculares</h2>
+
+        <div class="info-grid">
+
+            <div class="info-item">
+                <span>Nome IUPAC</span>
+                <strong id="iupac-name">-</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Fórmula</span>
+                <strong id="formula">-</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Massa Molecular</span>
+                <strong id="molwt">-</strong>
+            </div>
+
+            <div class="info-item">
+                <span>LogP</span>
+                <strong id="logp">-</strong>
+            </div>
+
+            <div class="info-item">
+                <span>TPSA</span>
+                <strong id="tpsa">-</strong>
+            </div>
+            <div class="info-item">
+    
+        <span>HBD</span>
+         <strong id="hbd">-</strong>
+        </div>
+
+        <div class="info-item">
+         <span>HBA</span>
+         <strong id="hba">-</strong>
+        </div>
+
+        <div class="info-item">
+         <span>Ligações Rotacionáveis</span>
+         <strong id="rotbonds">-</strong>
+        </div>
+
+        <div class="info-item">
+         <span>Anéis Aromáticos</span>
+         <strong id="aromaticrings">-</strong>
+        </div>
+
+        </div>
+
+    </div>
+
+    <div class="result-card">
+
+        <h2>Estrutura 2D</h2>
+
+        <img id="mol-img" class="mol-image">
+
+    </div>
+
+    <div class="result-card">
+
+        <h2>Identificadores</h2>
+
+        <div class="identifier-box">
+
+            <label>InChI</label>
+            <textarea id="inchi-box" readonly></textarea>
+
+            <label>InChIKey</label>
+            <input id="inchikey-box" readonly>
+
+        </div>
+
+    </div>
+
+</aside>
+
+</main>
+
+
+ <div class="table-wrapper">
+  <table
+    id="similar-table"
+    style="display:none;">
+    <thead>
+
+        <tr>
+
+            <th>Similaridade</th>
+
+            <th>SMILES</th>
+
+            <th>InChIKey</th>
+
+        </tr>
+    </thead>
+    <tbody id="similar-body"></tbody>
+
+  </table>
+ </div>
+
 
 <script src="app.js"></script>
 
 </body>
-
 </html>

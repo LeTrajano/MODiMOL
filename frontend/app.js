@@ -21,12 +21,11 @@ async function normalizar() {
        console.log("Resposta crua:");
        console.log(texto);
 
+       
+       
        const data = JSON.parse(texto);
 
        console.log(data);
-
-        document.getElementById("output").innerText =
-            JSON.stringify(data, null, 2);
 
         // imagem com SMILES canônico
         if (data.ok && data.smiles_canonico) {
@@ -35,6 +34,38 @@ async function normalizar() {
             console.log("IMG URL:", url);
 
             document.getElementById("mol-img").src = url;
+
+            document.getElementById("iupac-name").textContent =
+             data.iupac_name || "-";
+
+            document.getElementById("formula").textContent =
+             data.properties?.Formula || "-";
+
+            document.getElementById("molwt").textContent =
+             data.properties?.MolWt?.toFixed(2) || "-";
+
+            document.getElementById("logp").textContent =
+             data.properties?.LogP?.toFixed(2) || "-";
+
+            document.getElementById("tpsa").textContent =
+              data.properties?.TPSA?.toFixed(2) || "-";
+            document.getElementById("hbd").textContent =
+              data.properties?.HBD ?? "-";
+
+            document.getElementById("hba").textContent =
+              data.properties?.HBA ?? "-";
+
+            document.getElementById("rotbonds").textContent =
+              data.properties?.RotBonds ?? "-";
+
+            document.getElementById("aromaticrings").textContent =
+              data.properties?.AromaticRings ?? "-";
+            
+            document.getElementById("inchi-box").value =
+             data.inchi || "";
+
+            document.getElementById("inchikey-box").value =
+             data.inchi_key || "";
         }
 
     } catch (err) {
@@ -66,11 +97,25 @@ async function buscarSimilar() {
          console.log(response);
 
         const data = await response.json();
-
+        document.getElementById("similar-table").style.display = "table";        
         console.log("RESPOSTA SIMILAR:", data);
 
-        document.getElementById("output").innerText =
-            JSON.stringify(data, null, 2);
+        const tbody = document.getElementById("similar-body");
+
+        tbody.innerHTML = "";
+
+        for(const item of data.results){
+
+            const row = document.createElement("tr");
+
+          row.innerHTML = `
+           <td>${item.similarity.toFixed(3)}</td>
+           <td>${item.smiles}</td>
+           <td>${item.inchi_key}</td>
+    `       ;
+
+           tbody.appendChild(row);
+        }
 
     } catch (err) {
     console.error(err);
